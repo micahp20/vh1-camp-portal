@@ -1362,7 +1362,9 @@ async function saveClinician(){
     // Send welcome email if checked
     if(document.getElementById('clSendEmail').checked&&email){
       try{
-        await fetch(CFG.SENDGRID_URL,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+CFG.SENDGRID_KEY},body:sgBody(email,CFG.FROM_EMAIL,'VH1 Officials Camp — Your Clinician Login',buildClinicianEmailHTML(first,last,user,pass));try{await supa('campers','POST',toUpload);s=toUpload.length;}catch(e){for(const c of toUpload){try{await supa('campers','POST',c);s++;}catch(er){}}}btn.disabled=false;btn.textContent='Upload All';closeModal('mImport');toast(`${s} campers uploaded!`);await loadAll();renderAdminCampers();updateAdminStats();populateAdminForms();}
+        await fetch(CFG.SENDGRID_URL,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+CFG.SENDGRID_KEY},body:sgBody(email,CFG.FROM_EMAIL,'VH1 Officials Camp — Your Clinician Login',buildClinicianEmailHTML(first,last,user,pass))});
+      }catch(e){console.warn('Email failed',e);}
+    }
 // ═══ GOOGLE SHEETS SYNC (JotForm) ═══
 const SHEET_ID='1iWz9UiknCSy0WZcEgYO50nmD3IBs-puNxRNoIFXdNYk';
 function titleCase(s){if(!s)return'';return s.trim().replace(/\w\S*/g,t=>t.charAt(0).toUpperCase()+t.substr(1).toLowerCase());}
@@ -1543,7 +1545,7 @@ function buildPinEmailHTML(camper){
         </div>
       </div>
       <div style="text-align:center;margin-bottom:24px">
-        <a href="https://vh1camp.github.io/portal/" style="display:inline-block;background:#F47B20;color:#000;font-weight:800;font-size:15px;letter-spacing:.06em;padding:14px 32px;border-radius:8px;text-decoration:none">ACCESS CAMP PORTAL →</a>
+        <a href="https://micahp20.github.io/vh1-camp-portal/" style="display:inline-block;background:#F47B20;color:#000;font-weight:800;font-size:15px;letter-spacing:.06em;padding:14px 32px;border-radius:8px;text-decoration:none">ACCESS CAMP PORTAL →</a>
       </div>
       <p style="color:#555;font-size:12px;text-align:center;margin:0">Questions? Reply to this email or contact camp staff.<br>${CFG.CAMP_NAME} · June 18–20, 2026</p>
     </div>
@@ -1556,16 +1558,30 @@ async function sendPinEmail(id){
   const btn=document.getElementById('pinbtn-'+id);
   if(btn){btn.disabled=true;btn.textContent='⏳';}
   try{
-    const res=await fetch(CFG.SENDGRID_URL,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+CFG.SENDGRID_KEY},body:sgBody(c.email,CFG.FROM_EMAIL,`VH1 Officials Camp — Your Login PIN`,buildPinEmailHTML(c));
+    const res=await fetch(CFG.SENDGRID_URL,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+CFG.SENDGRID_KEY},body:sgBody(c.email,CFG.FROM_EMAIL,`VH1 Officials Camp — Your Login PIN`,buildPinEmailHTML(c))});
+    if(res.ok){toast('PIN sent to '+c.first_name+' '+c.last_name);if(btn){btn.textContent='✅';setTimeout(()=>{if(btn)btn.textContent='📧';btn.disabled=false;},3000);}}
+    else{toast('Email failed',true);if(btn){btn.textContent='📧';btn.disabled=false;}}
+  }catch(e){toast('Email error',true);if(btn){btn.textContent='📧';btn.disabled=false;}}
+}
+
+async function sendAllPins(){
+  const withEmail=campers.filter(c=>c.email);
+  if(!withEmail.length){toast('No campers have emails',true);return;}
+  const ok=await cf(`Send PIN emails to all ${withEmail.length} campers with email addresses?`,'Send All','Cancel');
+  if(!ok)return;
+  const btn=document.getElementById('sendAllPinsBtn');
+  btn.disabled=true;btn.textContent='⏳ Sending...';
+  let sent=0,failed=0;
+  for(const c of withEmail){
     try{
-      await supa('campers','POST',clean);
-      success+=clean.length;
-    }catch(e){
-      // Fall back to one-by-one
-      for(const c of clean){
-        try{await supa('campers','POST',c);success++;}catch(er){}
-      }
-    }
+      const res=await fetch(CFG.SENDGRID_URL,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+CFG.SENDGRID_KEY},body:sgBody(c.email,CFG.FROM_EMAIL,`VH1 Officials Camp — Your Login PIN`,buildPinEmailHTML(c))});
+      if(res.ok)sent++;else failed++;
+    }catch(e){failed++;}
+    await new Promise(r=>setTimeout(r,200));
+  }
+  btn.disabled=false;btn.textContent='📧 Send All PINs';
+  toast(`✅ ${sent} sent${failed?', '+failed+' failed':''}`);
+}
     done+=chunk.length;
     const pct=Math.round((done/total)*100);
     bar.style.width=pct+'%';
@@ -1581,6 +1597,139 @@ async function sendPinEmail(id){
   xlsxParsed=[];
   await loadAll();renderAdminCampers();updateAdminStats();populateAdminForms();
   toast('✅ '+success+' camper'+(success!==1?'s':'')+' imported with profiles!');
+}
+
+// ═══ EXCEL (XLSX) IMPORT ═══
+let xlsxParsed2=[];
+
+function handleXLSX(file){
+  if(!file)return;
+  const reader=new FileReader();
+  reader.onload=async e=>{
+    try{
+      if(!window.XLSX){
+        await new Promise((res,rej)=>{
+          const s=document.createElement('script');
+          s.src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+          s.onload=res;s.onerror=rej;
+          document.head.appendChild(s);
+        });
+      }
+      const data=new Uint8Array(e.target.result);
+      const wb=XLSX.read(data,{type:'array'});
+      const ws=wb.Sheets[wb.SheetNames[0]];
+      const rows=XLSX.utils.sheet_to_json(ws,{defval:''});
+      parseXLSXRows(rows);
+    }catch(err){toast('Failed to read Excel file: '+err.message,true);}
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function parseXLSXRows(rows){
+  const existingEmails=new Set(campers.map(c=>(c.email||'').toLowerCase()));
+  xlsxParsed2=[];
+  let skipped=0;
+  rows.forEach(row=>{
+    const first=titleCase((row['First Name']||'').trim());
+    const last=titleCase((row['Last Name']||'').trim());
+    const email=(row['E-mail']||row['Email']||'').trim().toLowerCase();
+    if(!first||!last)return;
+    if(email&&existingEmails.has(email)){skipped++;return;}
+    const cityState=(row['City, State']||'').trim();
+    let city='',state='';
+    if(cityState.includes(',')){
+      const parts=cityState.split(',');
+      city=parts[0].trim();
+      const rawState=parts[1].trim();
+      const stateMap={'Colorado':'CO','Utah':'UT','Wyoming':'WY','California':'CA','Nebraska':'NE','Montana':'MT','Kansas':'KS','New Mexico':'NM','Arizona':'AZ','Nevada':'NV','Idaho':'ID','Oregon':'OR','Washington':'WA','Texas':'TX','Florida':'FL','Minnesota':'MN','Missouri':'MO','Iowa':'IA','Illinois':'IL','Indiana':'IN','Ohio':'OH','Michigan':'MI','Wisconsin':'WI','Pennsylvania':'PA','New York':'NY','North Carolina':'NC','South Carolina':'SC','Georgia':'GA','Virginia':'VA','Maryland':'MD','Massachusetts':'MA','Connecticut':'CT','New Jersey':'NJ'};
+      state=stateMap[rawState]||rawState.substring(0,2).toUpperCase();
+    }else{city=cityState;}
+    const rmacVal=(row["Current RMAC Men's Staff"]||'').toString().toUpperCase();
+    const rmac=rmacVal==='YES'||rmacVal==='TRUE';
+    const retVal=(row['Returning Camper?']||'').toString().toUpperCase();
+    const is_returning=retVal==='YES'||retVal==='TRUE';
+    const levels=(row['Officiating Level of Experience (Check all that apply)']||'').toString();
+    let type='Non-Staff';
+    if(rmac)type='Staff';
+    else if(levels.toLowerCase().includes('womens college'))type='Womens College';
+    else if(levels.toLowerCase().includes('mens college'))type='Mens College';
+    else if(levels.toLowerCase().includes('high school'))type='High School';
+    const photoRaw=(row['Profile picture (head shot)']||'').toString().trim();
+    const photo=photoRaw.replace(/\s+/g,'%20')||null;
+    const phone=(row['Phone Number']||'').toString().trim()||null;
+    xlsxParsed2.push({
+      first_name:first,last_name:last,email:email||null,
+      city,state,phone,
+      bio:(row['Bio']||'').toString().trim()||null,
+      conference:(row['Conference']||'').toString().trim()||null,
+      levels:levels.trim()||null,
+      photo:photo&&photo.startsWith('http')?photo:null,
+      rmac,is_returning,type,
+      pin:String(Math.floor(1000+Math.random()*9000))
+    });
+    if(email)existingEmails.add(email);
+  });
+  document.getElementById('xlsxCount').textContent=xlsxParsed2.length;
+  document.getElementById('xlsxSkipCount').textContent=skipped;
+  document.getElementById('xlsxList').innerHTML=xlsxParsed2.map(c=>`
+    <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--b1)">
+      ${c.photo?`<img src="${c.photo}" referrerpolicy="no-referrer" style="width:32px;height:32px;border-radius:50%;object-fit:cover;flex-shrink:0" onerror="this.style.display='none'">`:'<div style="width:32px;height:32px;border-radius:50%;background:var(--gray3);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--tx3)">'+(c.first_name[0]||'')+(c.last_name[0]||'')+'</div>'}
+      <div style="flex:1;min-width:0">
+        <div style="font-size:13px;font-weight:600">${c.first_name} ${c.last_name}</div>
+        <div style="font-size:11px;color:var(--tx2)">${[c.city&&c.state?c.city+', '+c.state:'',c.type,c.rmac?'RMAC':''].filter(Boolean).join(' · ')}</div>
+      </div>
+      ${c.photo?'<span style="font-size:10px;color:var(--grn)">📷</span>':'<span style="font-size:10px;color:var(--tx3)">No photo</span>'}
+    </div>`).join('')||'<div style="font-size:12px;color:var(--tx3);padding:8px 0">No new campers to import</div>';
+  document.getElementById('xlsxPreview').style.display='block';
+  document.getElementById('xlsxUploadBtn').style.display=xlsxParsed2.length?'block':'none';
+}
+
+async function uploadXLSX(){
+  if(!xlsxParsed2.length)return;
+  const btn=document.getElementById('xlsxUploadBtn');
+  btn.disabled=true;btn.innerHTML='<span class="spinner"></span>';
+  document.getElementById('xlsxProgress').style.display='block';
+  const bar=document.getElementById('xlsxProgressBar');
+  const txt=document.getElementById('xlsxProgressTxt');
+  let done=0;const total=xlsxParsed2.length;
+  const chunks=[];
+  for(let i=0;i<xlsxParsed2.length;i+=5)chunks.push(xlsxParsed2.slice(i,i+5));
+  let success=0;
+  for(const chunk of chunks){
+    const clean=chunk.map(c=>({
+      first_name:c.first_name,last_name:c.last_name,
+      email:c.email||null,city:c.city||null,state:c.state||null,
+      phone:c.phone||null,
+      type:c.type||'Non-Staff',pin:c.pin,
+      photo:c.photo||null,
+      bio:c.bio||null,
+      conference:c.conference||null,
+      levels:c.levels||null,
+      rmac:c.rmac||false,
+      is_returning:c.is_returning||false
+    }));
+    try{
+      await supa('campers','POST',clean);
+      success+=clean.length;
+    }catch(e){
+      for(const c of clean){
+        try{await supa('campers','POST',c);success++;}catch(er){}
+      }
+    }
+    done+=chunk.length;
+    bar.style.width=Math.round((done/total)*100)+'%';
+    txt.textContent=`Uploading... ${done}/${total} campers`;
+    await new Promise(r=>setTimeout(r,100));
+  }
+  btn.disabled=false;btn.textContent='Import All';
+  document.getElementById('xlsxProgress').style.display='none';
+  closeModal('mXLSX');
+  document.getElementById('xlsxFile').value='';
+  document.getElementById('xlsxPreview').style.display='none';
+  document.getElementById('xlsxUploadBtn').style.display='none';
+  xlsxParsed2=[];
+  await loadAll();renderAdminCampers();updateAdminStats();populateAdminForms();
+  toast('✅ '+success+' camper'+(success!==1?'s':'')+' imported!');
 }
 
 // XLSX drag and drop
@@ -1734,7 +1883,7 @@ async function sendChatEmailBlast(msg,from){
           <div style="padding:24px;">
             <p style="color:#aaa;font-size:12px;margin:0 0 12px;text-transform:uppercase;letter-spacing:.1em">From ${from}</p>
             <p style="color:#f0f0eb;font-size:16px;line-height:1.7;margin:0 0 20px">${msg}</p>
-            <a href="https://vh1camp.github.io/portal/" style="display:inline-block;background:#F47B20;color:#000;font-weight:800;font-size:14px;padding:12px 24px;border-radius:8px;text-decoration:none">Open Camp Portal →</a>
+            <a href="https://micahp20.github.io/vh1-camp-portal/" style="display:inline-block;background:#F47B20;color:#000;font-weight:800;font-size:14px;padding:12px 24px;border-radius:8px;text-decoration:none">Open Camp Portal →</a>
           </div>
         </div>`
       })});
