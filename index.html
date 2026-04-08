@@ -1756,12 +1756,19 @@ async function uploadXLSX(){
   for(let i=0;i<xlsxParsed.length;i+=5)chunks.push(xlsxParsed.slice(i,i+5));
   let success=0;
   for(const chunk of chunks){
+    // Strip to only columns that exist in the campers table
+    const clean=chunk.map(c=>({
+      first_name:c.first_name,last_name:c.last_name,
+      email:c.email||null,city:c.city||null,state:c.state||null,
+      type:c.type||'Non-Staff',pin:c.pin,
+      photo_url:c.photo||null
+    }));
     try{
-      await supa('campers','POST',chunk);
-      success+=chunk.length;
+      await supa('campers','POST',clean);
+      success+=clean.length;
     }catch(e){
       // Fall back to one-by-one
-      for(const c of chunk){
+      for(const c of clean){
         try{await supa('campers','POST',c);success++;}catch(er){}
       }
     }
