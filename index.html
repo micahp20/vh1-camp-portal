@@ -1590,22 +1590,6 @@ async function sendAllPins(){
   btn.disabled=false;btn.textContent='📧 Send All PINs';
   toast(`✅ ${sent} sent${failed?', '+failed+' failed':''}`);
 }
-    done+=chunk.length;
-    const pct=Math.round((done/total)*100);
-    bar.style.width=pct+'%';
-    txt.textContent=`Fetching photos & uploading... ${done}/${total}`;
-    await new Promise(r=>setTimeout(r,100));
-  }
-  btn.disabled=false;btn.textContent='Import All';
-  document.getElementById('xlsxProgress').style.display='none';
-  closeModal('mXLSX');
-  document.getElementById('xlsxFile').value='';
-  document.getElementById('xlsxPreview').style.display='none';
-  document.getElementById('xlsxUploadBtn').style.display='none';
-  xlsxParsed=[];
-  await loadAll();renderAdminCampers();updateAdminStats();populateAdminForms();
-  toast('✅ '+success+' camper'+(success!==1?'s':'')+' imported with profiles!');
-}
 
 // ═══ EXCEL (XLSX) IMPORT ═══
 let xlsxParsed2=[];
