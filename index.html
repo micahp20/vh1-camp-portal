@@ -1760,18 +1760,25 @@ async function uploadXLSX(){
     const clean=await Promise.all(chunk.map(async c=>{
       let photo=null;
       if(c.photo&&c.photo.startsWith('http')){
-        try{
-          const proxyUrl='https://corsproxy.io/?'+encodeURIComponent(c.photo);
-          const res=await fetch(proxyUrl,{signal:AbortSignal.timeout(8000)});
-          if(res.ok){
-            const blob=await res.blob();
-            photo=await new Promise(resolve=>{
-              const reader=new FileReader();
-              reader.onload=()=>resolve(reader.result);
-              reader.readAsDataURL(blob);
-            });
-          }
-        }catch(e){console.warn('Photo fetch failed for',c.first_name,e.message);}
+        const proxies=[
+          'https://corsproxy.io/?'+encodeURIComponent(c.photo),
+          'https://api.allorigins.win/raw?url='+encodeURIComponent(c.photo),
+          'https://cors-anywhere.herokuapp.com/'+c.photo,
+        ];
+        for(const proxyUrl of proxies){
+          try{
+            const res=await fetch(proxyUrl,{signal:AbortSignal.timeout(10000)});
+            if(res.ok){
+              const blob=await res.blob();
+              photo=await new Promise(resolve=>{
+                const reader=new FileReader();
+                reader.onload=()=>resolve(reader.result);
+                reader.readAsDataURL(blob);
+              });
+              if(photo)break;
+            }
+          }catch(e){console.warn('Proxy failed:',proxyUrl.substring(0,40),e.message);}
+        }
       }
       return {
         first_name:c.first_name,last_name:c.last_name,
