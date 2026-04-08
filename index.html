@@ -1365,6 +1365,14 @@ async function saveClinician(){
         await fetch(CFG.SENDGRID_URL,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+CFG.SENDGRID_KEY},body:sgBody(email,CFG.FROM_EMAIL,'VH1 Officials Camp — Your Clinician Login',buildClinicianEmailHTML(first,last,user,pass))});
       }catch(e){console.warn('Email failed',e);}
     }
+    closeModal('mClinician');
+    toast('Clinician added & invited!');
+    ['clFirst','clLast','clEmail','clUser','clPass'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+    document.getElementById('clSendEmail').checked=true;
+    await loadAll();renderAdminClinicians();updateAdminStats();populateAdminForms();
+  }catch(e){console.error('saveClinician error:',e);errEl.textContent='Error: '+(e.message||'Unknown error');errEl.style.display='block';}
+}
+
 // ═══ GOOGLE SHEETS SYNC (JotForm) ═══
 const SHEET_ID='1iWz9UiknCSy0WZcEgYO50nmD3IBs-puNxRNoIFXdNYk';
 function titleCase(s){if(!s)return'';return s.trim().replace(/\w\S*/g,t=>t.charAt(0).toUpperCase()+t.substr(1).toLowerCase());}
