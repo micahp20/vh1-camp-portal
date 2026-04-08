@@ -1031,7 +1031,7 @@ function renderStaffRoster(filter){
   if(!list.length){con.innerHTML='<div class="empty" style="grid-column:1/-1"><span class="ei">🦪</span><div class="et">No Campers Found</div></div>';return;}
   con.innerHTML=list.map(c=>{
     const initials=(c.first_name?.[0]||'')+(c.last_name?.[0]||'');
-    const imgHtml=c.photo?`<img src="${c.photo}" alt="${c.first_name}" onerror="this.parentElement.innerHTML='<div class=pcard-initials>${initials}</div>'">`:`<div class="pcard-initials">${initials}</div>`;
+    const imgHtml=c.photo?`<img src="${c.photo}" alt="${c.first_name}" referrerpolicy="no-referrer" crossorigin="anonymous" onerror="this.parentElement.innerHTML='<div class=pcard-initials>${initials}</div>'">`:`<div class="pcard-initials">${initials}</div>`;
     const rmacTag=c.rmac?'<span class="ptag ptag-rmac">RMAC</span>':'';
     const retTag=c.is_returning?'<span class="ptag ptag-ret">↩</span>':'';
     const loc=(c.city||'')+(c.state?', '+c.state:'');
@@ -1508,7 +1508,7 @@ function renderProfiles(search){
     const evals=sc?sc.evalCount:0;
     const avg=sc?sc.overall.toFixed(1):'—';
     const initials=(c.first_name?.[0]||'')+(c.last_name?.[0]||'');
-    const imgHtml=c.photo?`<img src="${c.photo}" alt="${c.first_name}" onerror="this.parentElement.innerHTML='<div class=pcard-initials>${initials}</div>'">`:`<div class="pcard-initials">${initials}</div>`;
+    const imgHtml=c.photo?`<img src="${c.photo}" alt="${c.first_name}" referrerpolicy="no-referrer" crossorigin="anonymous" onerror="this.parentElement.innerHTML='<div class=pcard-initials>${initials}</div>'">`:`<div class="pcard-initials">${initials}</div>`;
     const rmacTag=c.rmac?'<span class="ptag ptag-rmac">RMAC</span>':'';
     const retTag=c.is_returning?'<span class="ptag ptag-ret">↩ Returning</span>':'';
     const loc=(c.city||'')+(c.state?', '+c.state:'');
@@ -1756,40 +1756,16 @@ async function uploadXLSX(){
   for(let i=0;i<xlsxParsed.length;i+=5)chunks.push(xlsxParsed.slice(i,i+5));
   let success=0;
   for(const chunk of chunks){
-    // Fetch and convert photos to base64 via CORS proxy
-    const clean=await Promise.all(chunk.map(async c=>{
-      let photo=null;
-      if(c.photo&&c.photo.startsWith('http')){
-        const proxies=[
-          'https://corsproxy.io/?'+encodeURIComponent(c.photo),
-          'https://api.allorigins.win/raw?url='+encodeURIComponent(c.photo),
-          'https://cors-anywhere.herokuapp.com/'+c.photo,
-        ];
-        for(const proxyUrl of proxies){
-          try{
-            const res=await fetch(proxyUrl,{signal:AbortSignal.timeout(10000)});
-            if(res.ok){
-              const blob=await res.blob();
-              photo=await new Promise(resolve=>{
-                const reader=new FileReader();
-                reader.onload=()=>resolve(reader.result);
-                reader.readAsDataURL(blob);
-              });
-              if(photo)break;
-            }
-          }catch(e){console.warn('Proxy failed:',proxyUrl.substring(0,40),e.message);}
-        }
-      }
-      return {
-        first_name:c.first_name,last_name:c.last_name,
-        email:c.email||null,city:c.city||null,state:c.state||null,
-        type:c.type||'Non-Staff',pin:c.pin,
-        photo:photo||null,
-        bio:c.bio||null,
-        conference:c.conference||null,
-        rmac:c.rmac||false,
-        is_returning:c.is_returning||false
-      };
+    // Store JotForm photo URL directly — browser loads it via img tag
+    const clean=chunk.map(c=>({
+      first_name:c.first_name,last_name:c.last_name,
+      email:c.email||null,city:c.city||null,state:c.state||null,
+      type:c.type||'Non-Staff',pin:c.pin,
+      photo:c.photo||null,
+      bio:c.bio||null,
+      conference:c.conference||null,
+      rmac:c.rmac||false,
+      is_returning:c.is_returning||false
     }));
     try{
       await supa('campers','POST',clean);
@@ -1878,7 +1854,7 @@ let chatPollTimer=null;
 
 async function loadChat(){
   try{
-    const msgs=await supa('chat','GET',null,'?order=created_at.asc&limit=100');
+    const msgs=await supa('chat_messages','GET',null,'?order=created_at.asc&limit=100');
     chatMessages=msgs||[];
     checkChatBadge();
   }catch(e){console.warn('Chat load error',e);}
@@ -1940,7 +1916,7 @@ async function sendChat(role){
   input.value='';
   const displayName=CU.first_name+' '+(CU.last_name||'');
   try{
-    await supa('chat','POST',{
+    await supa('chat_messages','POST',{
       user_id:CU.id||CU.username||displayName,
       display_name:displayName,
       user_role:CR,
@@ -1993,7 +1969,7 @@ function renderCamperProfiles(search){
   if(!list.length){grid.innerHTML='<div class="empty" style="grid-column:1/-1"><span class="ei">👤</span><div class="et">No campers found</div></div>';return;}
   grid.innerHTML=list.map(c=>{
     const initials=(c.first_name?.[0]||'')+(c.last_name?.[0]||'');
-    const imgHtml=c.photo?`<img src="${c.photo}" alt="${c.first_name}" onerror="this.parentElement.innerHTML='<div class=pcard-initials>${initials}</div>'">`:`<div class="pcard-initials">${initials}</div>`;
+    const imgHtml=c.photo?`<img src="${c.photo}" alt="${c.first_name}" referrerpolicy="no-referrer" crossorigin="anonymous" onerror="this.parentElement.innerHTML='<div class=pcard-initials>${initials}</div>'">`:`<div class="pcard-initials">${initials}</div>`;
     const rmacTag=c.rmac?'<span class="ptag ptag-rmac">RMAC</span>':'';
     const retTag=c.is_returning?'<span class="ptag ptag-ret">↩</span>':'';
     const loc=(c.city||'')+(c.state?', '+c.state:'');
@@ -2064,7 +2040,7 @@ async function clearChat(){
   const ok=await cf('Clear ALL chat messages? This cannot be undone.','Clear','Cancel');
   if(!ok)return;
   try{
-    await supa('chat','DELETE',null,'?id=not.is.null');
+    await supa('chat_messages','DELETE',null,'?id=not.is.null');
     chatMessages=[];
     renderChat('Admin');
     toast('Chat cleared');
@@ -2073,7 +2049,7 @@ async function clearChat(){
 
 async function deleteChatMsg(id){
   try{
-    await supa('chat','DELETE',null,`?id=eq.${id}`);
+    await supa('chat_messages','DELETE',null,`?id=eq.${id}`);
     chatMessages=chatMessages.filter(m=>m.id!==id);
     // Re-render whichever chat is visible
     if(document.getElementById('chatMsgsAdmin')?.closest('.tc.on'))renderChat('Admin');
