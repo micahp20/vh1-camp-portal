@@ -1692,7 +1692,10 @@ function parseXLSXRows(rows){
     let city='',state='';
     if(cityState.includes(',')){
       const parts=cityState.split(',');
-      city=parts[0].trim();
+      let rawCity=parts[0].trim();
+      // If city looks like a street address (contains numbers), extract last word(s)
+      if(/\d/.test(rawCity)){const words=rawCity.split(' ');city=words[words.length-1];}
+      else{city=rawCity;}
       // Handle full state names → abbreviate common ones
       const rawState=parts[1].trim();
       const stateMap={'Colorado':'CO','Utah':'UT','Wyoming':'WY','California':'CA','Nebraska':'NE','Montana':'MT','Kansas':'KS','New Mexico':'NM','Arizona':'AZ','Nevada':'NV','Idaho':'ID','Oregon':'OR','Washington':'WA','Texas':'TX','Florida':'FL','Minnesota':'MN','Missouri':'MO','Iowa':'IA','Illinois':'IL','Indiana':'IN','Ohio':'OH','Michigan':'MI','Wisconsin':'WI','Pennsylvania':'PA','New York':'NY','North Carolina':'NC','South Carolina':'SC','Georgia':'GA','Virginia':'VA','Maryland':'MD','Massachusetts':'MA','Connecticut':'CT','New Jersey':'NJ'};
@@ -1777,7 +1780,11 @@ async function uploadXLSX(){
         first_name:c.first_name,last_name:c.last_name,
         email:c.email||null,city:c.city||null,state:c.state||null,
         type:c.type||'Non-Staff',pin:c.pin,
-        photo:photo||null
+        photo:photo||null,
+        bio:c.bio||null,
+        conference:c.conference||null,
+        rmac:c.rmac||false,
+        is_returning:c.is_returning||false
       };
     }));
     try{
