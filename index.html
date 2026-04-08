@@ -1537,7 +1537,7 @@ function openProfile(id){
   const initials=(c.first_name?.[0]||'')+(c.last_name?.[0]||'');
   // Image
   const imgWrap=document.getElementById('pmImgWrap');
-  imgWrap.innerHTML=c.photo?`<img class="pmod-img" src="${c.photo}" alt="${c.first_name}" onerror="this.outerHTML='<div class=pmod-initials>${initials}</div>'">`:`<div class="pmod-initials">${initials}</div>`;
+  imgWrap.innerHTML=c.photo?`<img class="pmod-img" src="${c.photo}" alt="${c.first_name}" referrerpolicy="no-referrer" onerror="this.outerHTML='<div class=pmod-initials>${initials}</div>'">`:`<div class="pmod-initials">${initials}</div>`;
   // Body
   const loc=(c.city||'')+(c.state?', '+c.state:'');
   let tags='';
@@ -1988,7 +1988,7 @@ function openCamperProfile(id){
   const c=campers.find(x=>x.id===id);if(!c)return;
   const initials=(c.first_name?.[0]||'')+(c.last_name?.[0]||'');
   const imgHtml=c.photo
-    ?`<img class="pmod-img" src="${c.photo}" alt="${c.first_name}" onerror="this.outerHTML='<div class=pmod-initials>${initials}</div>'">`
+    ?`<img class="pmod-img" src="${c.photo}" alt="${c.first_name}" referrerpolicy="no-referrer" onerror="this.outerHTML='<div class=pmod-initials>${initials}</div>'">`
     :`<div class="pmod-initials">${initials}</div>`;
   const loc=(c.city||'')+(c.state?', '+c.state:'');
   let tags='';
