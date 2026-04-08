@@ -1378,7 +1378,7 @@ function buildClinicianEmailHTML(first,last,username,password){
     </div>
   </div>`;
 }
-async function delClinician(id){const ok=await cf('Remove this clinician?','Remove','Cancel');if(!ok)return;try{await supa('clinicians','DELETE',null,`?id=eq.${id}`);toast('Removed');await loadAll();renderAdminClinicians();updateAdminStats();}catch(e){toast('Error',true);}}
+async function delClinician(id){const ok=await cf('Remove this clinician?','Remove','Cancel');if(!ok)return;try{const clin=clinicians.find(c=>c.id===id);await supa('clinicians','DELETE',null,`?id=eq.${id}`);if(clin){const nameParts=clin.name.split(' ');const first=nameParts[0];const last=nameParts.slice(1).join(' ');await supa('staff','DELETE',null,`?first_name=eq.${encodeURIComponent(first)}&last_name=eq.${encodeURIComponent(last)}`);}toast('Removed');await loadAll();renderAdminClinicians();updateAdminStats();}catch(e){toast('Error',true);}}
 
 // ═══ RANKINGS ═══
 function buildCamperScores(){
