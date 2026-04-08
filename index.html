@@ -44,7 +44,7 @@ body{font-family:'Barlow',sans-serif;background:var(--black);color:var(--tx);min
 body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(-45deg,transparent,transparent 18px,rgba(0,0,0,.018) 18px,rgba(0,0,0,.018) 36px);pointer-events:none;z-index:0}
 
 /* LOGIN */
-#loginScreen{position:fixed;inset:0;z-index:1000;background:linear-gradient(160deg,#fff8f3 0%,#f7f1ea 60%,#fde8d8 100%);display:flex;align-items:center;justify-content:center;padding:24px 20px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+#loginScreen{position:fixed;inset:0;z-index:1000;background:linear-gradient(160deg,#fff8f3 0%,#f7f1ea 60%,#fde8d8 100%);display:flex;align-items:center;justify-content:center;padding:24px 20px;overflow-y:auto}
 .lwrap{width:100%;max-width:420px;position:relative;z-index:1}
 .llogo{display:flex;flex-direction:column;align-items:center;margin-bottom:22px}
 .llogo img{width:96px;height:96px;border-radius:50%;border:3px solid var(--or);box-shadow:0 0 0 10px var(--ord),0 16px 48px rgba(0,0,0,.7);object-fit:cover}
@@ -52,18 +52,18 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
 .ltitle{font-family:'Bebas Neue',sans-serif;font-size:40px;letter-spacing:.04em;color:var(--tx);text-align:center;line-height:1}
 .lsub{font-size:12px;color:var(--tx2);text-align:center;margin-top:5px;letter-spacing:.06em;line-height:1.6}
 .ltabs{display:flex;margin-top:16px;background:var(--gray2);border-radius:var(--rs);padding:4px;border:1px solid var(--b2)}
-.lbtn{width:100%;background:var(--or);border:none;border-radius:var(--rs);padding:15px;font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.1em;color:#000;cursor:pointer;margin-top:14px;touch-action:manipulation}
-.lbtn:active{background:var(--or2)}
-.ltab{flex:1;padding:10px 4px;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:.08em;color:var(--tx2);cursor:pointer;border-radius:6px;transition:all .15s;background:none;border:none;touch-action:manipulation}
+.ltab{flex:1;padding:10px 4px;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:.08em;color:var(--tx2);cursor:pointer;border-radius:6px;transition:all .15s;background:none;border:none}
 .ltab.on{background:var(--or);color:#000}
-.lform{background:#ffffff;border:1px solid #d0cdc8;border-radius:var(--r);padding:20px;margin-top:10px;position:relative;overflow:hidden;box-shadow:0 6px 32px rgba(0,0,0,.18)}
+.lform{background:#ffffff;border:1px solid var(--b2);border-radius:var(--r);padding:20px;margin-top:10px;position:relative;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.10)}
 .lform::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:repeating-linear-gradient(90deg,#1a1a1a 0,#1a1a1a 12px,var(--or) 12px,var(--or) 24px)}
 .fl{display:block;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--tx2);margin-bottom:5px;margin-top:12px}
 .fl:first-of-type{margin-top:0}
-.fi{width:100%;background:#ffffff;border:2px solid #d0cdc8;border-radius:var(--rs);padding:14px;font-family:'Barlow',sans-serif;font-size:16px;color:#1a1a1a;outline:none;transition:border-color .2s;-webkit-appearance:none;box-shadow:0 1px 4px rgba(0,0,0,.08)}
-.fi:focus{border-color:var(--or);box-shadow:0 0 0 3px rgba(232,98,26,.15)}
-.fi::placeholder{color:#aaa9a4}
+.fi{width:100%;background:var(--gray2);border:1px solid var(--b3);border-radius:var(--rs);padding:14px;font-family:'Barlow',sans-serif;font-size:16px;color:var(--tx);outline:none;transition:border-color .2s;-webkit-appearance:none}
+.fi:focus{border-color:var(--or)}
+.fi::placeholder{color:var(--tx3)}
 .fi-pin{text-align:center;font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:.22em}
+.lbtn{width:100%;background:var(--or);border:none;border-radius:var(--rs);padding:15px;font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.1em;color:#000;cursor:pointer;margin-top:14px}
+.lbtn:active{background:var(--or2)}
 .lerr{background:var(--redd);border:1px solid var(--redb);border-radius:var(--rs);padding:10px 14px;font-size:13px;color:var(--red2);margin-top:10px;display:none;text-align:center}
 
 /* APP SHELL */
@@ -322,8 +322,8 @@ td{padding:9px 12px;border-bottom:1px solid var(--b1);vertical-align:middle;colo
 .chat-msg.other{align-self:flex-start;align-items:flex-start}
 .chat-bubble{padding:10px 14px;border-radius:16px;font-size:14px;line-height:1.5;word-break:break-word}
 .chat-msg.mine .chat-bubble{background:var(--or);color:#000;border-bottom-right-radius:4px}
-.chat-msg.other .chat-bubble{background:#e8e4de;color:#1a1a1a;border-bottom-left-radius:4px}
-.chat-msg.admin-msg .chat-bubble{background:linear-gradient(135deg,#1a0a00,#2a1200);border:1px solid var(--orb);color:#fff}
+.chat-msg.other .chat-bubble{background:var(--gray2);color:var(--tx);border-bottom-left-radius:4px}
+.chat-msg.admin-msg .chat-bubble{background:linear-gradient(135deg,#1a0a00,#2a1200);border:1px solid var(--orb);color:var(--tx)}
 .chat-meta{font-size:10px;color:var(--tx3);margin-top:3px;display:flex;align-items:center;gap:5px}
 .chat-sender{font-weight:700;color:var(--tx2)}
 .chat-badge{font-size:8px;font-weight:800;letter-spacing:.08em;padding:1px 5px;border-radius:3px}
@@ -411,6 +411,7 @@ if('serviceWorker' in navigator){
 <button class="bb" id="cb-schedule" onclick="cView('schedule')" type="button"><span class="bi">📅</span><span class="bl">Schedule</span></button>
 <button class="bb" id="cb-myprofile" onclick="cView('myprofile')" type="button"><span class="bi">👤</span><span class="bl">My Profile</span></button>
 <button class="bb" id="cb-campinfo" onclick="cView('campinfo')" type="button"><span class="bi">📄</span><span class="bl">Camp Info</span></button>
+<button class="bb" id="cb-campinfo" onclick="cView('campinfo')" type="button"><span class="bi">📄</span><span class="bl">Camp Info</span></button>
 <button class="bb" id="cb-chat" onclick="cView('chat')" type="button"><span class="bi">💬</span><span class="bl">Chat</span><span class="badge-dot" id="chatDotC"></span></button>
 </nav>
 <div class="view on" id="cv-home">
@@ -480,6 +481,7 @@ if('serviceWorker' in navigator){
 <button class="bb" id="sb-roster" onclick="sView('roster')" type="button"><span class="bi">🪪</span><span class="bl">Roster</span></button>
 <button class="bb" id="sb-schedule" onclick="sView('schedule')" type="button"><span class="bi">📅</span><span class="bl">Schedule</span></button>
 <button class="bb" id="sb-myprofile" onclick="sView('myprofile')" type="button"><span class="bi">👤</span><span class="bl">My Profile</span></button>
+<button class="bb" id="sb-campinfo" onclick="sView('campinfo')" type="button"><span class="bi">📄</span><span class="bl">Camp Info</span></button>
 <button class="bb" id="sb-campinfo" onclick="sView('campinfo')" type="button"><span class="bi">📄</span><span class="bl">Camp Info</span></button>
 <button class="bb" id="sb-chat" onclick="sView('chat')" type="button"><span class="bi">💬</span><span class="bl">Chat</span><span class="badge-dot" id="chatDotS"></span></button>
 </nav>
@@ -556,6 +558,7 @@ if('serviceWorker' in navigator){
 <button class="atab" onclick="aTab('profiles',this)" type="button">🪪 Profiles</button>
 <button class="atab" onclick="aTab('schedule',this)" type="button">📅 Schedule</button>
 <button class="atab" id="campInfoTab" onclick="aTab('campinfo',this)" type="button">📄 Camp Info</button>
+<button class="atab" id="campInfoTab" onclick="aTab('campinfo',this)" type="button">📄 Camp Info</button>
 <button class="atab" id="chatAdminTab" onclick="aTab('chat',this)" type="button">💬 Chat <span class="badge-dot" id="chatDotA" style="position:relative;top:-6px;right:0;display:none"></span></button>
 <button class="atab" onclick="aTab('settings',this)" type="button">⚙️ Settings</button>
 </div>
@@ -582,7 +585,7 @@ if('serviceWorker' in navigator){
 <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
 <div class="swrap"><span class="sicon">🔍</span><input class="sinput" type="text" id="acSearch" placeholder="Search..." oninput="renderAdminCampers(this.value)"></div>
 <button class="btn bor bsm" onclick="openAddCamper()" type="button">➕ Add</button>
-<button class="btn bsec bsm" onclick="openModal('mXLSX')" type="button">📊 Excel</button><button class="btn bsec bsm" onclick="openModal('mImport')" type="button">📋 CSV</button>
+<button class="btn bsec bsm" onclick="openModal('mXLSX')" type="button">📊 Excel</button>
 <button class="btn bsec bsm" id="sendAllPinsBtn" onclick="sendAllPins()" type="button">📧 Send All PINs</button>
 <button class="btn bred bsm" onclick="deleteAllCampers()" type="button">🗑 Delete All</button>
 </div>
@@ -805,20 +808,10 @@ const CFG={
   SUPA_URL:'https://zwuhkeglnymgngtznvdu.supabase.co',
   SUPA_KEY:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp3dWhrZWdsbnltZ25ndHpudmR1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU2MTQxMDMsImV4cCI6MjA5MTE5MDEwM30.dnAB23QEAbGkQzFxfk7GsVxoGgKvFrIIWTpEiksmXLs',
   SENDGRID_URL:'https://vh1camp2026.netlify.app/.netlify/functions/send-email',
-  SENDGRID_KEY:'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',
   FROM_EMAIL:'admin@vh1basketball.com',
   CAMP_NAME:'VH1 Basketball Officials Camp',
   CATS:['Mechanics','Rules Knowledge','Positioning','Game Management','Communication','Professionalism']
 };
-function sgBody(to,from,subject,html){
-  return JSON.stringify({
-    personalizations:[{to:[{email:to}]}],
-    from:{email:from,name:'VH1 Camp'},
-    subject:subject,
-    content:[{type:'text/html',value:html}]
-  });
-}
-
 
 // ═══ STATE ═══
 let campers=[],evaluations=[],clinicians=[],staffList=[],settings={};
@@ -1041,7 +1034,7 @@ function renderStaffRoster(filter){
   if(!list.length){con.innerHTML='<div class="empty" style="grid-column:1/-1"><span class="ei">🦪</span><div class="et">No Campers Found</div></div>';return;}
   con.innerHTML=list.map(c=>{
     const initials=(c.first_name?.[0]||'')+(c.last_name?.[0]||'');
-    const imgHtml=c.photo?`<img src="${c.photo}" alt="${c.first_name}" referrerpolicy="no-referrer" crossorigin="anonymous" onerror="this.parentElement.innerHTML='<div class=pcard-initials>${initials}</div>'">`:`<div class="pcard-initials">${initials}</div>`;
+    const imgHtml=c.photo?`<img src="${c.photo}" alt="${c.first_name}" onerror="this.parentElement.innerHTML='<div class=pcard-initials>${initials}</div>'">`:`<div class="pcard-initials">${initials}</div>`;
     const rmacTag=c.rmac?'<span class="ptag ptag-rmac">RMAC</span>':'';
     const retTag=c.is_returning?'<span class="ptag ptag-ret">↩</span>':'';
     const loc=(c.city||'')+(c.state?', '+c.state:'');
@@ -1141,7 +1134,7 @@ async function submitAdminEval(){
       await loadAll();
       const camperEvals=evaluations.filter(e=>e.camper_id===cid);
       try{
-        const res=await fetch(CFG.SENDGRID_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({to:camper.email,subject:`${CFG.CAMP_NAME} — Your Evaluation Results`,html:buildEmailHTML(camper,camperEvals)})});
+        const res=await fetch(CFG.SENDGRID_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({to:camper.email,from:CFG.FROM_EMAIL,subject:`${CFG.CAMP_NAME} — Your Evaluation Results`,html:buildEmailHTML(camper,camperEvals)})});
         st.innerHTML=res.ok?'<div class="email-ok">✓ Saved & emailed</div>':'<div class="email-ok">✓ Saved</div><div class="email-err">✕ Email failed</div>';
       }catch(e){st.innerHTML='<div class="email-ok">✓ Saved</div><div class="email-err">✕ Email failed</div>';}
     }else{st.innerHTML='<div class="email-ok">✓ Saved (no email on file)</div>';}
@@ -1339,22 +1332,6 @@ async function saveClinician(){
   if(!pass||pass.length<4){errEl.textContent='Password must be at least 4 characters.';errEl.style.display='block';return;}
   const fullName=first+' '+last;
   try{
-    // Check for duplicate username
-    const existing=staffList.find(s=>s.username&&s.username.toLowerCase()===user.toLowerCase());
-    if(existing){
-      // If staff record exists but not in clinicians list, update it and re-add to clinicians
-      const inClinicians=clinicians.find(c=>c.name===(first+' '+last));
-      if(!inClinicians){
-        await supa('staff','PATCH',{first_name:first,last_name:last,password:pass,role},`?id=eq.${existing.id}`);
-        await supa('clinicians','POST',{name:first+' '+last});
-        closeModal('mClinician');toast('Clinician re-added!');
-        ['clFirst','clLast','clEmail','clUser','clPass'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-        document.getElementById('clSendEmail').checked=true;
-        await loadAll();renderAdminClinicians();updateAdminStats();populateAdminForms();
-        return;
-      }
-      errEl.textContent='Username already taken — choose a different one.';errEl.style.display='block';return;
-    }
     // Create staff login account
     await supa('staff','POST',{first_name:first,last_name:last,username:user,password:pass,role});
     // Also add to clinicians list for eval dropdown
@@ -1362,17 +1339,76 @@ async function saveClinician(){
     // Send welcome email if checked
     if(document.getElementById('clSendEmail').checked&&email){
       try{
-        await fetch(CFG.SENDGRID_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({to:email,subject:'VH1 Officials Camp — Your Clinician Login',html:buildClinicianEmailHTML(first,last,user,pass)})});
+        await fetch(CFG.SENDGRID_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+          to:email,from:CFG.FROM_EMAIL,
+          subject:'VH1 Officials Camp — Your Clinician Login',
+          html:buildClinicianEmailHTML(first,last,user,pass)
+        })});
       }catch(e){console.warn('Email failed',e);}
     }
     closeModal('mClinician');
     toast('Clinician added & invited!');
+    // Reset form
     ['clFirst','clLast','clEmail','clUser','clPass'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
     document.getElementById('clSendEmail').checked=true;
     await loadAll();renderAdminClinicians();updateAdminStats();populateAdminForms();
   }catch(e){console.error('saveClinician error:',e);errEl.textContent='Error: '+(e.message||'Unknown error');errEl.style.display='block';}
 }
 
+function buildClinicianEmailHTML(first,last,username,password){
+  return `<div style="max-width:560px;margin:0 auto;background:#111;border-radius:12px;overflow:hidden;font-family:Arial,sans-serif;">
+    <div style="background:#F47B20;padding:20px 24px;"><h2 style="color:#fff;margin:0;font-size:22px;letter-spacing:2px;">VH1 BASKETBALL OFFICIALS CAMP</h2><p style="color:rgba(255,255,255,.8);margin:4px 0 0;font-size:12px;letter-spacing:.1em">JUNE 18–20, 2026 · CLINICIAN ACCESS</p></div>
+    <div style="padding:28px;">
+      <p style="color:#f0f0eb;font-size:16px;margin:0 0 8px">Hey ${first},</p>
+      <p style="color:#aaa;font-size:14px;line-height:1.7;margin:0 0 24px">You've been added as a clinician for the VH1 Basketball Officials Camp. Use the credentials below to log in to the staff portal and submit evaluations.</p>
+      <div style="background:#1a1a1a;border:1px solid #333;border-radius:10px;padding:20px;margin-bottom:24px;text-align:center">
+        <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#888;margin-bottom:14px">YOUR LOGIN CREDENTIALS</div>
+        <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+          <div style="background:#111;border-radius:8px;padding:14px 20px;min-width:120px">
+            <div style="font-size:10px;color:#888;letter-spacing:.1em;margin-bottom:6px">USERNAME</div>
+            <div style="font-size:22px;font-weight:700;color:#f0f0eb;letter-spacing:.04em">${username}</div>
+          </div>
+          <div style="background:#F47B20;border-radius:8px;padding:14px 20px;min-width:120px">
+            <div style="font-size:10px;color:rgba(0,0,0,.6);letter-spacing:.1em;margin-bottom:6px">PASSWORD</div>
+            <div style="font-size:24px;font-weight:900;color:#000;letter-spacing:.08em">${password}</div>
+          </div>
+        </div>
+      </div>
+      <div style="text-align:center;margin-bottom:24px">
+        <a href="https://www.vh1basketball.com/app" style="display:inline-block;background:#F47B20;color:#000;font-weight:800;font-size:15px;letter-spacing:.06em;padding:14px 32px;border-radius:8px;text-decoration:none">ACCESS STAFF PORTAL →</a>
+      </div>
+      <p style="color:#555;font-size:12px;text-align:center;margin:0">Log in using the <strong style="color:#aaa">Staff</strong> tab on the login screen.<br>${CFG.CAMP_NAME} · June 18–20, 2026</p>
+    </div>
+  </div>`;
+}
+async function delClinician(id){const ok=await cf('Remove this clinician?','Remove','Cancel');if(!ok)return;try{await supa('clinicians','DELETE',null,`?id=eq.${id}`);toast('Removed');await loadAll();renderAdminClinicians();updateAdminStats();}catch(e){toast('Error',true);}}
+
+// ═══ RANKINGS ═══
+function buildCamperScores(){
+  const cs={};
+  campers.forEach(c=>{const ev=evaluations.filter(e=>e.camper_id===c.id);if(!ev.length)return;const ca={};CFG.CATS.forEach(cat=>{const k=cat.toLowerCase().replace(/\s+/g,'_');const v=ev.map(e=>e.scores?.[k]).filter(v=>v!=null);ca[cat]=v.length?v.reduce((a,b)=>a+b,0)/v.length:0;});const ov=ev.map(e=>e.overall_score).filter(v=>v!=null);const o=ov.length?ov.reduce((a,b)=>a+b,0)/ov.length:0;const h=Math.max(ev.length/2,1);cs[c.id]={camper:c,catAverages:ca,overall:o,evalCount:ev.length,rmac:ev.filter(e=>e.scores?.rmac_ready===true).length>=h,conference:ev.filter(e=>e.scores?.conference_ready===true).length>=h,top10:ev.filter(e=>e.scores?.top10===true).length>=h,clinicians:[...new Set(ev.map(e=>e.clinician_name).filter(Boolean))]};});
+  return cs;
+}
+function renderAdminRankings(){
+  const fr=document.getElementById('rankFilter');fr.innerHTML='';
+  ['overall',...CFG.CATS,'top10'].forEach(cat=>{const c=document.createElement('button');c.className='fchip'+(cat===rankSort?' on':'');c.textContent=cat==='overall'?'Overall':cat==='top10'?'Top 10':cat;c.onclick=()=>{rankSort=cat;renderAdminRankings();};fr.appendChild(c);});
+  const cs=buildCamperScores();
+  let sorted=Object.values(cs);
+  if(rankSort==='top10'){sorted=sorted.filter(e=>e.top10);sorted.sort((a,b)=>b.overall-a.overall);}
+  else if(rankSort==='overall')sorted.sort((a,b)=>b.overall-a.overall);
+  else sorted.sort((a,b)=>(b.catAverages[rankSort]||0)-(a.catAverages[rankSort]||0));
+  const con=document.getElementById('arankcon');
+  if(!sorted.length){con.innerHTML='<div class="empty"><span class="ei">'+(rankSort==='top10'?'⭐':'📊')+'</span><div class="et">'+(rankSort==='top10'?'No Top 10 campers yet':'No evaluations yet')+'</div></div>';return;}
+  con.innerHTML=sorted.map((e,idx)=>{const rc=idx<3?'r'+(idx+1):'';const bars=CFG.CATS.map(cat=>{const v=e.catAverages[cat]||0;const p=(v/10)*100;return`<div class="rank-bar-row"><span class="rank-bar-lbl">${cat.length>8?cat.substring(0,8):cat}</span><div class="rank-bar-bg"><div class="rank-bar-fill" style="width:${p}%"></div></div><span class="rank-bar-val">${v.toFixed(1)}</span></div>`;}).join('');let tags='';if(e.rmac)tags+='<span class="bdg bdgrn">RMAC</span>';if(e.conference)tags+='<span class="bdg bdo">Conference</span>';if(e.top10)tags+='<span class="bdg bdgold">Top 10</span>';return`<div class="rank-card ${rc}"><div class="rank-num">${idx+1}</div><div class="rank-info"><div class="rank-name">${e.camper.first_name} ${e.camper.last_name}</div><div class="rank-det">${e.evalCount} eval${e.evalCount!==1?'s':''} · ${e.clinicians.join(', ')}</div>${tags?`<div class="rank-tags">${tags}</div>`:''}<div class="rank-bars">${bars}</div></div><div class="rank-avg">${e.overall.toFixed(1)}</div></div>`;}).join('');
+}
+
+// ═══ SETTINGS ═══
+async function saveSetting(key,val){try{await supa('settings','PATCH',{value:String(val)},`?key=eq.${key}`);settings[key]=String(val);toast('Setting saved');}catch(e){toast('Error',true);}}
+async function clearAllEvals(){const ok=await cf('Clear ALL evaluations? This cannot be undone.','Clear','Cancel');if(!ok)return;try{await supa('evaluations','DELETE',null,'?id=not.is.null');toast('All evaluations cleared');await loadAll();updateAdminStats();renderRecentEvals();}catch(e){toast('Error',true);}}
+
+// ═══ CSV IMPORT ═══
+function handleCSV(file){if(!file)return;const r=new FileReader();r.onload=e=>{const lines=e.target.result.split(/\r?\n/).filter(l=>l.trim());csvParsed=[];const fl=lines[0].toLowerCase();const si=(fl.includes('first')||fl.includes('name')||fl.includes('email'))?1:0;for(let i=si;i<lines.length;i++){const p=lines[i].split(',').map(s=>s.trim().replace(/^["']|["']$/g,''));if(p.length>=2)csvParsed.push({first_name:p[0],last_name:p[1],email:p[2]||null,city:p[3]||null,state:p[4]||null,type:p[5]||'Non-Staff'});}if(csvParsed.length){document.getElementById('csvCount').textContent=csvParsed.length;document.getElementById('csvList').innerHTML=csvParsed.map(c=>`<div style="font-size:12px;color:var(--tx2);padding:3px 0;border-bottom:1px solid var(--b1)">${c.first_name} ${c.last_name}${c.email?' — '+c.email:''}</div>`).join('');document.getElementById('csvPreview').style.display='block';document.getElementById('csvUploadBtn').style.display='block';}else toast('No valid data',true);};r.readAsText(file);}
+async function uploadCSV(){const btn=document.getElementById('csvUploadBtn');btn.disabled=true;btn.innerHTML='<span class="spinner"></span>';let s=0;const toUpload=csvParsed.map(c=>({...c,pin:String(Math.floor(1000+Math.random()*9000))}));try{await supa('campers','POST',toUpload);s=toUpload.length;}catch(e){for(const c of toUpload){try{await supa('campers','POST',c);s++;}catch(er){}}}btn.disabled=false;btn.textContent='Upload All';closeModal('mImport');toast(`${s} campers uploaded!`);await loadAll();renderAdminCampers();updateAdminStats();populateAdminForms();}
 // ═══ GOOGLE SHEETS SYNC (JotForm) ═══
 const SHEET_ID='1iWz9UiknCSy0WZcEgYO50nmD3IBs-puNxRNoIFXdNYk';
 function titleCase(s){if(!s)return'';return s.trim().replace(/\w\S*/g,t=>t.charAt(0).toUpperCase()+t.substr(1).toLowerCase());}
@@ -1442,33 +1478,6 @@ async function processGvizData(t){
 }
 function resetSyncBtn(){const btn=document.getElementById('syncBtn');if(btn){btn.textContent='🔄 Sync JotForm';btn.disabled=false;}}
 // ═══ PROFILES ═══
-function buildCamperScores(){
-  const scores={};
-  campers.forEach(c=>{
-    const myEvals=evaluations.filter(e=>e.camper_id===c.id);
-    if(!myEvals.length)return;
-    const catTotals={};const catCounts={};
-    myEvals.forEach(ev=>{
-      CFG.CATS.forEach(cat=>{
-        const key=cat.toLowerCase().replace(/\s+/g,'_');
-        const val=ev[key];
-        if(val!=null&&val>0){
-          catTotals[cat]=(catTotals[cat]||0)+val;
-          catCounts[cat]=(catCounts[cat]||0)+1;
-        }
-      });
-    });
-    const catAverages={};
-    CFG.CATS.forEach(cat=>{
-      catAverages[cat]=catCounts[cat]?(catTotals[cat]/catCounts[cat]):0;
-    });
-    const vals=Object.values(catAverages).filter(v=>v>0);
-    const overall=vals.length?vals.reduce((a,b)=>a+b,0)/vals.length:0;
-    scores[c.id]={camper:c,overall,evalCount:myEvals.length,catAverages};
-  });
-  return scores;
-}
-
 function renderProfiles(search){
   search=(search||'').toLowerCase().trim();
   const filter=document.getElementById('apFilter')?.value||'';
@@ -1486,7 +1495,7 @@ function renderProfiles(search){
     const evals=sc?sc.evalCount:0;
     const avg=sc?sc.overall.toFixed(1):'—';
     const initials=(c.first_name?.[0]||'')+(c.last_name?.[0]||'');
-    const imgHtml=c.photo?`<img src="${c.photo}" alt="${c.first_name}" referrerpolicy="no-referrer" crossorigin="anonymous" onerror="this.parentElement.innerHTML='<div class=pcard-initials>${initials}</div>'">`:`<div class="pcard-initials">${initials}</div>`;
+    const imgHtml=c.photo?`<img src="${c.photo}" alt="${c.first_name}" onerror="this.parentElement.innerHTML='<div class=pcard-initials>${initials}</div>'">`:`<div class="pcard-initials">${initials}</div>`;
     const rmacTag=c.rmac?'<span class="ptag ptag-rmac">RMAC</span>':'';
     const retTag=c.is_returning?'<span class="ptag ptag-ret">↩ Returning</span>':'';
     const loc=(c.city||'')+(c.state?', '+c.state:'');
@@ -1515,7 +1524,7 @@ function openProfile(id){
   const initials=(c.first_name?.[0]||'')+(c.last_name?.[0]||'');
   // Image
   const imgWrap=document.getElementById('pmImgWrap');
-  imgWrap.innerHTML=c.photo?`<img class="pmod-img" src="${c.photo}" alt="${c.first_name}" referrerpolicy="no-referrer" onerror="this.outerHTML='<div class=pmod-initials>${initials}</div>'">`:`<div class="pmod-initials">${initials}</div>`;
+  imgWrap.innerHTML=c.photo?`<img class="pmod-img" src="${c.photo}" alt="${c.first_name}" onerror="this.outerHTML='<div class=pmod-initials>${initials}</div>'">`:`<div class="pmod-initials">${initials}</div>`;
   // Body
   const loc=(c.city||'')+(c.state?', '+c.state:'');
   let tags='';
@@ -1593,7 +1602,11 @@ async function sendPinEmail(id){
   const btn=document.getElementById('pinbtn-'+id);
   if(btn){btn.disabled=true;btn.textContent='⏳';}
   try{
-    const res=await fetch(CFG.SENDGRID_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({to:c.email,subject:`VH1 Officials Camp — Your Login PIN`,html:buildPinEmailHTML(c)})});
+    const res=await fetch(CFG.SENDGRID_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+      to:c.email,from:CFG.FROM_EMAIL,
+      subject:`VH1 Officials Camp — Your Login PIN`,
+      html:buildPinEmailHTML(c)
+    })});
     if(res.ok){toast('PIN sent to '+c.first_name+' '+c.last_name);if(btn){btn.textContent='✅';setTimeout(()=>{if(btn)btn.textContent='📧';btn.disabled=false;},3000);}}
     else{toast('Email failed',true);if(btn){btn.textContent='📧';btn.disabled=false;}}
   }catch(e){toast('Email error',true);if(btn){btn.textContent='📧';btn.disabled=false;}}
@@ -1609,9 +1622,14 @@ async function sendAllPins(){
   let sent=0,failed=0;
   for(const c of withEmail){
     try{
-      const res=await fetch(CFG.SENDGRID_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({to:c.email,subject:`VH1 Officials Camp — Your Login PIN`,html:buildPinEmailHTML(c)})});
+      const res=await fetch(CFG.SENDGRID_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+        to:c.email,from:CFG.FROM_EMAIL,
+        subject:`VH1 Officials Camp — Your Login PIN`,
+        html:buildPinEmailHTML(c)
+      })});
       if(res.ok)sent++;else failed++;
     }catch(e){failed++;}
+    // small delay to avoid rate limiting
     await new Promise(r=>setTimeout(r,200));
   }
   btn.disabled=false;btn.textContent='📧 Send All PINs';
@@ -1619,13 +1637,14 @@ async function sendAllPins(){
 }
 
 // ═══ EXCEL (XLSX) IMPORT ═══
-let xlsxParsed2=[];
+let xlsxParsed=[];
 
 function handleXLSX(file){
   if(!file)return;
   const reader=new FileReader();
   reader.onload=async e=>{
     try{
+      // Dynamically load SheetJS
       if(!window.XLSX){
         await new Promise((res,rej)=>{
           const s=document.createElement('script');
@@ -1646,39 +1665,45 @@ function handleXLSX(file){
 
 function parseXLSXRows(rows){
   const existingEmails=new Set(campers.map(c=>(c.email||'').toLowerCase()));
-  xlsxParsed2=[];
+  xlsxParsed=[];
   let skipped=0;
   rows.forEach(row=>{
+    // Column mapping for VH1 JotForm Excel export
     const first=titleCase((row['First Name']||'').trim());
     const last=titleCase((row['Last Name']||'').trim());
     const email=(row['E-mail']||row['Email']||'').trim().toLowerCase();
     if(!first||!last)return;
     if(email&&existingEmails.has(email)){skipped++;return;}
+    // Parse city/state
     const cityState=(row['City, State']||'').trim();
     let city='',state='';
     if(cityState.includes(',')){
       const parts=cityState.split(',');
       city=parts[0].trim();
+      // Handle full state names → abbreviate common ones
       const rawState=parts[1].trim();
       const stateMap={'Colorado':'CO','Utah':'UT','Wyoming':'WY','California':'CA','Nebraska':'NE','Montana':'MT','Kansas':'KS','New Mexico':'NM','Arizona':'AZ','Nevada':'NV','Idaho':'ID','Oregon':'OR','Washington':'WA','Texas':'TX','Florida':'FL','Minnesota':'MN','Missouri':'MO','Iowa':'IA','Illinois':'IL','Indiana':'IN','Ohio':'OH','Michigan':'MI','Wisconsin':'WI','Pennsylvania':'PA','New York':'NY','North Carolina':'NC','South Carolina':'SC','Georgia':'GA','Virginia':'VA','Maryland':'MD','Massachusetts':'MA','Connecticut':'CT','New Jersey':'NJ'};
       state=stateMap[rawState]||rawState.substring(0,2).toUpperCase();
     }else{city=cityState;}
+    // RMAC
     const rmacVal=(row["Current RMAC Men's Staff"]||'').toString().toUpperCase();
-    const rmac=rmacVal==='YES'||rmacVal==='TRUE';
+    const rmac=rmacVal==='YES'||rmacVal==='TRUE'||rmacVal==='1';
+    // Returning
     const retVal=(row['Returning Camper?']||'').toString().toUpperCase();
-    const is_returning=retVal==='YES'||retVal==='TRUE';
-    const levels=(row['Officiating Level of Experience (Check all that apply)']||'').toString();
+    const is_returning=retVal==='YES'||retVal==='TRUE'||retVal==='1';
+    // Type — derive from officiating level
+    const levels=(row['Officiating Level of Experience (Check all that apply)']||row['Officiating Level']||'').toString();
     let type='Non-Staff';
     if(rmac)type='Staff';
     else if(levels.toLowerCase().includes('womens college'))type='Womens College';
     else if(levels.toLowerCase().includes('mens college'))type='Mens College';
     else if(levels.toLowerCase().includes('high school'))type='High School';
-    const photoRaw=(row['Profile picture (head shot)']||'').toString().trim();
+    // Photo URL — clean spaces
+    const photoRaw=(row['Profile picture (head shot)']||row['Profile Picture']||row['Photo']||'').toString().trim();
     const photo=photoRaw.replace(/\s+/g,'%20')||null;
-    const phone=(row['Phone Number']||'').toString().trim()||null;
-    xlsxParsed2.push({
+    xlsxParsed.push({
       first_name:first,last_name:last,email:email||null,
-      city,state,phone,
+      city,state,phone:(row['Phone Number']||'').toString().trim()||null,
       bio:(row['Bio']||'').toString().trim()||null,
       conference:(row['Conference']||'').toString().trim()||null,
       levels:levels.trim()||null,
@@ -1688,55 +1713,48 @@ function parseXLSXRows(rows){
     });
     if(email)existingEmails.add(email);
   });
-  document.getElementById('xlsxCount').textContent=xlsxParsed2.length;
+  // Show preview
+  document.getElementById('xlsxCount').textContent=xlsxParsed.length;
   document.getElementById('xlsxSkipCount').textContent=skipped;
-  document.getElementById('xlsxList').innerHTML=xlsxParsed2.map(c=>`
+  document.getElementById('xlsxList').innerHTML=xlsxParsed.map(c=>`
     <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--b1)">
-      ${c.photo?`<img src="${c.photo}" referrerpolicy="no-referrer" style="width:32px;height:32px;border-radius:50%;object-fit:cover;flex-shrink:0" onerror="this.style.display='none'">`:'<div style="width:32px;height:32px;border-radius:50%;background:var(--gray3);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--tx3)">'+(c.first_name[0]||'')+(c.last_name[0]||'')+'</div>'}
+      ${c.photo?`<img src="${c.photo}" style="width:32px;height:32px;border-radius:50%;object-fit:cover;object-position:center 15%;flex-shrink:0" onerror="this.style.display='none'">`:'<div style="width:32px;height:32px;border-radius:50%;background:var(--gray3);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--tx3)">'+(c.first_name[0]||'')+(c.last_name[0]||'')+'</div>'}
       <div style="flex:1;min-width:0">
         <div style="font-size:13px;font-weight:600">${c.first_name} ${c.last_name}</div>
         <div style="font-size:11px;color:var(--tx2)">${[c.city&&c.state?c.city+', '+c.state:'',c.type,c.rmac?'RMAC':''].filter(Boolean).join(' · ')}</div>
       </div>
       ${c.photo?'<span style="font-size:10px;color:var(--grn)">📷</span>':'<span style="font-size:10px;color:var(--tx3)">No photo</span>'}
-    </div>`).join('')||'<div style="font-size:12px;color:var(--tx3);padding:8px 0">No new campers to import</div>';
+    </div>
+  `).join('')||'<div style="font-size:12px;color:var(--tx3);padding:8px 0">No new campers to import</div>';
   document.getElementById('xlsxPreview').style.display='block';
-  document.getElementById('xlsxUploadBtn').style.display=xlsxParsed2.length?'block':'none';
+  document.getElementById('xlsxUploadBtn').style.display=xlsxParsed.length?'block':'none';
 }
 
 async function uploadXLSX(){
-  if(!xlsxParsed2.length)return;
+  if(!xlsxParsed.length)return;
   const btn=document.getElementById('xlsxUploadBtn');
   btn.disabled=true;btn.innerHTML='<span class="spinner"></span>';
   document.getElementById('xlsxProgress').style.display='block';
   const bar=document.getElementById('xlsxProgressBar');
   const txt=document.getElementById('xlsxProgressTxt');
-  let done=0;const total=xlsxParsed2.length;
+  let done=0;const total=xlsxParsed.length;
+  // Upload in chunks of 5
   const chunks=[];
-  for(let i=0;i<xlsxParsed2.length;i+=5)chunks.push(xlsxParsed2.slice(i,i+5));
+  for(let i=0;i<xlsxParsed.length;i+=5)chunks.push(xlsxParsed.slice(i,i+5));
   let success=0;
   for(const chunk of chunks){
-    const clean=chunk.map(c=>({
-      first_name:c.first_name,last_name:c.last_name,
-      email:c.email||null,city:c.city||null,state:c.state||null,
-      phone:c.phone||null,
-      type:c.type||'Non-Staff',pin:c.pin,
-      photo:c.photo||null,
-      bio:c.bio||null,
-      conference:c.conference||null,
-      levels:c.levels||null,
-      rmac:c.rmac||false,
-      is_returning:c.is_returning||false
-    }));
     try{
-      await supa('campers','POST',clean);
-      success+=clean.length;
+      await supa('campers','POST',chunk);
+      success+=chunk.length;
     }catch(e){
-      for(const c of clean){
+      // Fall back to one-by-one
+      for(const c of chunk){
         try{await supa('campers','POST',c);success++;}catch(er){}
       }
     }
     done+=chunk.length;
-    bar.style.width=Math.round((done/total)*100)+'%';
+    const pct=Math.round((done/total)*100);
+    bar.style.width=pct+'%';
     txt.textContent=`Uploading... ${done}/${total} campers`;
     await new Promise(r=>setTimeout(r,100));
   }
@@ -1746,9 +1764,9 @@ async function uploadXLSX(){
   document.getElementById('xlsxFile').value='';
   document.getElementById('xlsxPreview').style.display='none';
   document.getElementById('xlsxUploadBtn').style.display='none';
-  xlsxParsed2=[];
+  xlsxParsed=[];
   await loadAll();renderAdminCampers();updateAdminStats();populateAdminForms();
-  toast('✅ '+success+' camper'+(success!==1?'s':'')+' imported!');
+  toast('✅ '+success+' camper'+(success!==1?'s':'')+' imported with profiles!');
 }
 
 // XLSX drag and drop
@@ -1927,7 +1945,7 @@ function renderCamperProfiles(search){
   if(!list.length){grid.innerHTML='<div class="empty" style="grid-column:1/-1"><span class="ei">👤</span><div class="et">No campers found</div></div>';return;}
   grid.innerHTML=list.map(c=>{
     const initials=(c.first_name?.[0]||'')+(c.last_name?.[0]||'');
-    const imgHtml=c.photo?`<img src="${c.photo}" alt="${c.first_name}" referrerpolicy="no-referrer" crossorigin="anonymous" onerror="this.parentElement.innerHTML='<div class=pcard-initials>${initials}</div>'">`:`<div class="pcard-initials">${initials}</div>`;
+    const imgHtml=c.photo?`<img src="${c.photo}" alt="${c.first_name}" onerror="this.parentElement.innerHTML='<div class=pcard-initials>${initials}</div>'">`:`<div class="pcard-initials">${initials}</div>`;
     const rmacTag=c.rmac?'<span class="ptag ptag-rmac">RMAC</span>':'';
     const retTag=c.is_returning?'<span class="ptag ptag-ret">↩</span>':'';
     const loc=(c.city||'')+(c.state?', '+c.state:'');
@@ -1946,7 +1964,7 @@ function openCamperProfile(id){
   const c=campers.find(x=>x.id===id);if(!c)return;
   const initials=(c.first_name?.[0]||'')+(c.last_name?.[0]||'');
   const imgHtml=c.photo
-    ?`<img class="pmod-img" src="${c.photo}" alt="${c.first_name}" referrerpolicy="no-referrer" onerror="this.outerHTML='<div class=pmod-initials>${initials}</div>'">`
+    ?`<img class="pmod-img" src="${c.photo}" alt="${c.first_name}" onerror="this.outerHTML='<div class=pmod-initials>${initials}</div>'">`
     :`<div class="pmod-initials">${initials}</div>`;
   const loc=(c.city||'')+(c.state?', '+c.state:'');
   let tags='';
@@ -2263,6 +2281,116 @@ function startGlobalChatPoll(){
   globalChatPollTimer=setInterval(async()=>{await loadChat();},10000);
 }
 
+
+// ═══ CAMP INFO DOCS (Supabase-backed) ═══
+let campDocs=[];
+
+async function loadCampDocs(){
+  try{
+    const docs=await supa('camp_docs','GET',null,'?order=uploaded_at.asc');
+    campDocs=docs||[];
+  }catch(e){console.warn('Camp docs load error',e);}
+}
+
+function renderCampInfoDocs(){
+  const list=document.getElementById('campInfoList');
+  const empty=document.getElementById('campInfoEmpty');
+  const emailBar=document.getElementById('campInfoEmailBar');
+  const emailDocs=document.getElementById('campInfoEmailDocs');
+  if(!campDocs.length){list.innerHTML='';empty.style.display='block';emailBar.style.display='none';return;}
+  empty.style.display='none';emailBar.style.display='block';
+  list.innerHTML=campDocs.map((doc,i)=>`
+    <div style="display:flex;align-items:center;justify-content:space-between;background:var(--gray);border:1px solid var(--b2);border-radius:var(--r);padding:10px 14px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="font-size:20px">📄</span>
+        <div><div style="font-weight:600;color:var(--tx);font-size:13px">${escapeHtml(doc.name)}</div><div style="font-size:11px;color:var(--tx3)">${new Date(doc.uploaded_at).toLocaleDateString()}</div></div>
+      </div>
+      <div style="display:flex;gap:6px">
+        <a href="${doc.data}" download="${escapeHtml(doc.name)}" class="btn bsec bsm">⬇ View</a>
+        <button class="btn bred bsm" onclick="deleteCampDoc('${doc.id}')" type="button">🗑</button>
+      </div>
+    </div>`).join('');
+  emailDocs.innerHTML=campDocs.map((doc,i)=>`
+    <label style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--tx);margin-bottom:4px;cursor:pointer">
+      <input type="checkbox" id="ciCheck_${i}" checked style="accent-color:var(--or)">
+      ${escapeHtml(doc.name)}
+    </label>`).join('');
+}
+
+function renderCampInfoViewer(prefix){
+  const list=document.getElementById(prefix+'CampInfoList');
+  const empty=document.getElementById(prefix+'CampInfoEmpty');
+  if(!list)return;
+  if(!campDocs.length){list.innerHTML='';empty.style.display='block';return;}
+  empty.style.display='none';
+  list.innerHTML=campDocs.map(doc=>`
+    <div style="display:flex;align-items:center;justify-content:space-between;background:#fff;border:1px solid var(--b2);border-radius:var(--r);padding:12px 14px;box-shadow:0 1px 4px rgba(0,0,0,.06)">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="font-size:22px">📄</span>
+        <div><div style="font-weight:600;color:var(--tx);font-size:13px">${escapeHtml(doc.name)}</div><div style="font-size:11px;color:var(--tx3)">Posted ${new Date(doc.uploaded_at).toLocaleDateString()}</div></div>
+      </div>
+      <a href="${doc.data}" download="${escapeHtml(doc.name)}" class="btn bor bsm">⬇ Download</a>
+    </div>`).join('');
+}
+
+function handlePDFUpload(e){
+  const file=e.target.files[0];if(!file)return;
+  if(file.size>4*1024*1024){toast('PDF too large — keep under 4MB',true);e.target.value='';return;}
+  toast('Uploading...');
+  const reader=new FileReader();
+  reader.onload=async function(ev){
+    try{
+      await supa('camp_docs','POST',{name:file.name,data:ev.target.result});
+      await loadCampDocs();
+      renderCampInfoDocs();
+      toast('Document uploaded!');
+    }catch(err){toast('Upload failed: '+(err.message||'error'),true);}
+  };
+  reader.readAsDataURL(file);
+  e.target.value='';
+}
+
+async function deleteCampDoc(id){
+  const ok=await cf('Remove this document?','Remove','Cancel');
+  if(!ok)return;
+  try{
+    await supa('camp_docs','DELETE',null,`?id=eq.${id}`);
+    await loadCampDocs();
+    renderCampInfoDocs();
+    toast('Removed');
+  }catch(e){toast('Error',true);}
+}
+
+async function emailCampDocs(){
+  const selected=campDocs.filter((_,i)=>document.getElementById('ciCheck_'+i)?.checked);
+  if(!selected.length){toast('Select at least one document',true);return;}
+  const emails=campers.map(c=>c.email).filter(Boolean);
+  if(!emails.length){toast('No camper emails found',true);return;}
+  const statusEl=document.getElementById('campInfoEmailStatus');
+  statusEl.textContent='Sending...';
+  const docLinks=selected.map(d=>`<p>📄 <strong>${d.name}</strong><br><a href="${d.data}" download="${d.name}" style="color:#E8640A">Download ${d.name}</a></p>`).join('');
+  let sent=0;
+  for(const email of emails){
+    try{
+      await fetch(CFG.SENDGRID_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+        to:email,from:CFG.FROM_EMAIL,
+        subject:'VH1 Basketball Officials Camp — Camp Documents',
+        html:`<div style="max-width:560px;margin:0 auto;background:#fff;border-radius:12px;padding:24px;font-family:Arial,sans-serif;color:#1a1a1a;border:1px solid #e0e0db"><h2 style="color:#E8640A;margin:0 0 12px">📄 Camp Documents</h2><p style="color:#555;margin:0 0 16px">Documents shared for the VH1 Basketball Officials Camp:</p>${docLinks}<p style="color:#999;font-size:11px;margin-top:20px">VH1 Basketball Officials Camp</p></div>`
+      })});
+      sent++;
+    }catch(err){console.warn('Email failed for',email);}
+  }
+  statusEl.textContent=`✓ Sent to ${sent} of ${emails.length} campers`;
+  toast(`Sent to ${sent} campers`);
+}
+
+// Global background chat poll
+let globalChatPollTimer=null;
+function startGlobalChatPoll(){
+  if(globalChatPollTimer)return;
+  globalChatPollTimer=setInterval(async()=>{await loadChat();},10000);
+}
+
 // ═══ DELETE ALL ═══
 async function deleteAllCampers(){
   if(!campers.length){toast('No campers to delete',true);return;}
@@ -2292,11 +2420,6 @@ async function deleteAllClinicians(){
   const ok=await cf(`Delete ALL ${clinicians.length} clinicians?`,'Delete All','Cancel');
   if(!ok)return;
   try{
-    // Delete staff accounts that are clinicians/evaluators
-    const clinicianStaff=staffList.filter(s=>s.role==='Evaluator'||s.role==='Clinician');
-    for(const s of clinicianStaff){
-      await supa('staff','DELETE',null,`?id=eq.${s.id}`).catch(()=>{});
-    }
     await supa('clinicians','DELETE',null,'?id=not.is.null');
     toast('All clinicians deleted');
     await loadAll();renderAdminClinicians();updateAdminStats();populateAdminForms();
