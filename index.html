@@ -1564,33 +1564,57 @@ function openProfile(id){
 
 // ═══ PIN EMAIL ═══
 function buildPinEmailHTML(camper){
-  return `<div style="max-width:560px;margin:0 auto;background:#111;border-radius:12px;overflow:hidden;font-family:Arial,sans-serif;">
-    <div style="background:#F47B20;padding:24px;text-align:center;">
-      <h1 style="color:#fff;margin:0;font-size:26px;letter-spacing:2px;">VH1 BASKETBALL OFFICIALS CAMP</h1>
-      <p style="color:rgba(255,255,255,.8);margin:6px 0 0;font-size:13px;letter-spacing:.1em">JUNE 18–20, 2026</p>
-    </div>
-    <div style="padding:28px;">
-      <p style="color:#f0f0eb;font-size:16px;margin:0 0 8px">Hey ${camper.first_name},</p>
-      <p style="color:#aaa;font-size:14px;line-height:1.7;margin:0 0 24px">You're registered for the VH1 Basketball Officials Camp! Use the credentials below to log in to the camp portal and track your evaluations.</p>
-      <div style="background:#1a1a1a;border:1px solid #333;border-radius:10px;padding:20px;margin-bottom:24px;text-align:center">
-        <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#888;margin-bottom:14px">YOUR LOGIN CREDENTIALS</div>
-        <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
-          <div style="background:#111;border-radius:8px;padding:14px 20px;min-width:120px">
-            <div style="font-size:10px;color:#888;letter-spacing:.1em;margin-bottom:6px">LAST NAME</div>
-            <div style="font-size:22px;font-weight:700;color:#f0f0eb;letter-spacing:.04em">${camper.last_name}</div>
-          </div>
-          <div style="background:#F47B20;border-radius:8px;padding:14px 20px;min-width:120px">
-            <div style="font-size:10px;color:rgba(0,0,0,.6);letter-spacing:.1em;margin-bottom:6px">PIN</div>
-            <div style="font-size:32px;font-weight:900;color:#000;letter-spacing:.12em">${camper.pin}</div>
-          </div>
-        </div>
-      </div>
-      <div style="text-align:center;margin-bottom:24px">
-        <a href="https://www.vh1basketball.com/app" style="display:inline-block;background:#F47B20;color:#000;font-weight:800;font-size:15px;letter-spacing:.06em;padding:14px 32px;border-radius:8px;text-decoration:none">ACCESS CAMP PORTAL →</a>
-      </div>
-      <p style="color:#555;font-size:12px;text-align:center;margin:0">Questions? Reply to this email or contact camp staff.<br>${CFG.CAMP_NAME} · June 18–20, 2026</p>
-    </div>
-  </div>`;
+  return `<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"></head><body style="margin:0;padding:0;background:#f4f4f4;font-family:Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f4;padding:20px 0;">
+    <tr><td align="center">
+      <table width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#111;border-radius:12px;overflow:hidden;">
+        <!-- Header -->
+        <tr><td style="background:#F47B20;padding:28px 24px;text-align:center;">
+          <div style="color:#fff;font-size:22px;font-weight:900;letter-spacing:3px;line-height:1.3;">VH1 BASKETBALL<br>OFFICIALS CAMP</div>
+          <div style="color:rgba(255,255,255,.85);font-size:13px;margin-top:6px;letter-spacing:.1em;">JUNE 18–20, 2026 • DENVER, CO</div>
+        </td></tr>
+        <!-- Body -->
+        <tr><td style="padding:28px 24px;">
+          <p style="color:#f0f0eb;font-size:17px;margin:0 0 6px;font-weight:700;">Hey ${camper.first_name}!</p>
+          <p style="color:#aaa;font-size:14px;line-height:1.7;margin:0 0 24px;">You're registered for the VH1 Basketball Officials Camp! Use the credentials below to log in to the camp portal and track your evaluations.</p>
+          <!-- Credentials Box -->
+          <table width="100%" cellpadding="0" cellspacing="0" style="background:#1a1a1a;border:1px solid #333;border-radius:10px;margin-bottom:24px;">
+            <tr><td style="padding:20px;text-align:center;">
+              <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#888;margin-bottom:16px;">YOUR LOGIN CREDENTIALS</div>
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td width="50%" style="padding:4px;">
+                    <table width="100%" cellpadding="0" cellspacing="0" style="background:#111;border-radius:8px;">
+                      <tr><td style="padding:16px;text-align:center;">
+                        <div style="font-size:10px;color:#888;letter-spacing:.1em;margin-bottom:8px;">LAST NAME</div>
+                        <div style="font-size:20px;font-weight:700;color:#f0f0eb;word-break:break-word;">${camper.last_name}</div>
+                      </td></tr>
+                    </table>
+                  </td>
+                  <td width="50%" style="padding:4px;">
+                    <table width="100%" cellpadding="0" cellspacing="0" style="background:#F47B20;border-radius:8px;">
+                      <tr><td style="padding:16px;text-align:center;">
+                        <div style="font-size:10px;color:rgba(0,0,0,.6);letter-spacing:.1em;margin-bottom:8px;">PIN</div>
+                        <div style="font-size:36px;font-weight:900;color:#000;letter-spacing:.12em;">${camper.pin}</div>
+                      </td></tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td></tr>
+          </table>
+          <!-- CTA Button -->
+          <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
+            <tr><td align="center">
+              <a href="https://www.vh1basketball.com/app" style="display:inline-block;background:#F47B20;color:#000;font-weight:800;font-size:15px;letter-spacing:.06em;padding:16px 40px;border-radius:8px;text-decoration:none;">ACCESS CAMP PORTAL →</a>
+            </td></tr>
+          </table>
+          <p style="color:#555;font-size:12px;text-align:center;margin:0;">Questions? Reply to this email or contact camp staff.<br>VH1 Basketball Officials Camp · June 18–20, 2026</p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+  </body></html>`;
 }
 
 async function sendPinEmail(id){
