@@ -1312,7 +1312,9 @@ function renderAdminClinicians(){
   const tbody=document.getElementById('aclbody');
   if(!clinicians.length){tbody.innerHTML='<tr><td colspan="3"><div class="empty"><span class="ei">🏁</span><div class="et">No Clinicians Yet</div></div></td></tr>';return;}
   tbody.innerHTML='';
-  clinicians.forEach((c,i)=>{const tr=document.createElement('tr');tr.innerHTML=`<td class="tdr">${i+1}</td><td class="tdm">${c.name}</td><td><button class="btn bred bsm" onclick="delClinician('${c.id}')">🗑</button></td>`;tbody.appendChild(tr);});
+  clinicians.forEach((c,i)=>{const tr=document.createElement('tr');// find matching staff record
+  const staffRec=staffList.find(s=>s.first_name+' '+s.last_name===c.name);
+  tr.innerHTML=`<td class="tdr">${i+1}</td><td class="tdm">${c.name}${staffRec?'<br><span style="font-size:11px;color:var(--tx3)">@'+staffRec.username+'</span>':''}</td><td style="white-space:nowrap"><button class="btn bsec bsm" style="margin-right:4px" onclick="editClinician('${c.id}')">✏️</button><button class="btn bred bsm" onclick="delClinician('${c.id}')">🗑</button></td>`;tbody.appendChild(tr);});
 }
 async function saveClinician(){
   const first=document.getElementById('clFirst').value.trim();
@@ -1378,6 +1380,28 @@ function buildClinicianEmailHTML(first,last,username,password){
     </div>
   </div>`;
 }
+async function editClinician(id){
+  const clin=clinicians.find(c=>c.id===id);
+  if(!clin)return;
+  const nameParts=clin.name.split(' ');
+  const first=nameParts[0];
+  const last=nameParts.slice(1).join(' ');
+  const staffRec=staffList.find(s=>s.first_name===first&&s.last_name===last);
+  // Pre-fill the Add Clinician form
+  document.getElementById('clFirst').value=first;
+  document.getElementById('clLast').value=last;
+  document.getElementById('clEmail').value=staffRec?.email||'';
+  document.getElementById('clUser').value=staffRec?.username||'';
+  document.getElementById('clPass').value='';
+  document.getElementById('clRole').value=staffRec?.role||'evaluator';
+  // Change button text
+  const saveBtn=document.querySelector('#mClinician .btn.bor');
+  if(saveBtn){saveBtn.textContent='Update Clinician';saveBtn.dataset.editId=id;}
+  // Delete old record first so save works
+  await delClinician(id);
+  openModal('mClinician');
+}
+
 async function delClinician(id){const ok=await cf('Remove this clinician?','Remove','Cancel');if(!ok)return;try{const clin=clinicians.find(c=>c.id===id);await supa('clinicians','DELETE',null,`?id=eq.${id}`);if(clin){const nameParts=clin.name.split(' ');const first=nameParts[0];const last=nameParts.slice(1).join(' ');await supa('staff','DELETE',null,`?first_name=eq.${encodeURIComponent(first)}&last_name=eq.${encodeURIComponent(last)}`);}toast('Removed');await loadAll();renderAdminClinicians();updateAdminStats();}catch(e){toast('Error',true);}}
 
 // ═══ RANKINGS ═══
@@ -1828,13 +1852,13 @@ function handlePhotoUpload(input){
     const img=new Image();
     img.onload=()=>{
       const canvas=document.createElement('canvas');
-      const MAX=600;
+      const MAX=400;
       let w=img.width,h=img.height;
       if(w>h){if(w>MAX){h=Math.round(h*MAX/w);w=MAX;}}
       else{if(h>MAX){w=Math.round(w*MAX/h);h=MAX;}}
       canvas.width=w;canvas.height=h;
       canvas.getContext('2d').drawImage(img,0,0,w,h);
-      const compressed=canvas.toDataURL('image/jpeg',0.82);
+      const compressed=canvas.toDataURL('image/jpeg',0.7);
       document.getElementById('cfPhoto').value=compressed;
       updatePhotoPreview();
       toast('Photo ready ✓');
